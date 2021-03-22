@@ -1,0 +1,14 @@
+# npm
+node_modules
+
+# env
+.env
+
+# temp
+/__temp
+
+# build
+/build
+
+# npm
+package-lock.json
