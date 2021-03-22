@@ -7,14 +7,14 @@ import { defaultComparator } from '../tools'
  * @param comparator return true if a and b values is equal
  * (default is strict equal)
  */
-export function batchBy<U>(
-  comparator: (a: U, b: U) => boolean = defaultComparator
-): (source: Highland.Stream<U>) => Highland.Stream<U[]> {
+export function batchBy<T>(
+  comparator: (a: T, b: T) => boolean = defaultComparator
+): (source: Highland.Stream<T>) => Highland.Stream<T[]> {
   return source => {
-    let last: U | undefined = undefined
-    let batch: U[] = []
+    let last: T | undefined = undefined
+    let batch: T[] = []
 
-    return source.consume<U[]>((err, it, push, next) => {
+    return source.consume<T[]>((err, it, push, next) => {
       if (err) {
         push(err)
         next()
@@ -23,14 +23,14 @@ export function batchBy<U>(
         push(null, it)
         batch = []
       } else {
-        if (last !== undefined && !comparator(last, it as U)) {
+        if (last !== undefined && !comparator(last, it as T)) {
           const _tmp = batch
-          batch = [it as U]
+          batch = [it as T]
           push(null, _tmp)
         } else {
-          batch.push(it as U)
+          batch.push(it as T)
         }
-        last = it as U
+        last = it as T
         next()
       }
     })

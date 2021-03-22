@@ -6,11 +6,11 @@ import { defaultComparator } from '../tools'
  * @param comparator return true if a and b values is equal
  * (default is strict equal)
  */
-export function changes<U>(
-  comparator: (a: U, b: U) => boolean = defaultComparator
-): (source: Highland.Stream<U>) => Highland.Stream<U> {
+export function changes<T>(
+  comparator: (a: T, b: T) => boolean = defaultComparator
+): (source: Highland.Stream<T>) => Highland.Stream<T> {
   return source => {
-    let last: U | undefined = undefined
+    let last: T | undefined = undefined
 
     return source
       .map(it => {
