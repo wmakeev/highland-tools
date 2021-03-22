@@ -19,9 +19,18 @@ test('fromAsyncGenerator #1', t => {
 })
 
 test('fromAsyncGenerator #2', t => {
-  t.plan(2)
+  t.plan(3)
 
-  const generator = async function* (len: number) {
+  const generator1 = async function* () {
+    await wait(10)
+    yield 0
+  }
+
+  let generator2started = false
+
+  const generator2 = async function* (len: number) {
+    generator2started = true
+
     for (let i = 1; i <= len; i++) {
       await wait(10)
 
@@ -31,12 +40,20 @@ test('fromAsyncGenerator #2', t => {
     }
   }
 
-  _H(fromAsyncGenerator(() => generator(5)))
+  const stream1$ = _H(fromAsyncGenerator(() => generator1()))
+
+  const stream2$ = _H(fromAsyncGenerator(() => generator2(5)))
+
+  stream1$
+    .tap(() => {
+      t.equal(generator2started, false, 'should lazy start generator')
+    })
+    .concat(stream2$)
     .errors(err => {
       t.equal(err.message, 'Test error')
     })
     .toArray(arr => {
-      t.deepEqual(arr, [1, 2, 3])
+      t.deepEqual(arr, [0, 1, 2, 3])
       t.end()
     })
 })

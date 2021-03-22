@@ -1,9 +1,8 @@
 import test from 'tape'
 import _H from 'highland'
 
-import { batchByWithCountOrTime } from '../src'
-
-// const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+import { batchByWithCountOrTime, fromAsyncGenerator } from '../src'
+import { wait } from '../src/tools'
 
 test('batchByWithCountOrTime #1', t => {
   const values = [1, 1, 1, 2, 2, 1, 3]
@@ -53,6 +52,51 @@ test('batchByWithCountOrTime #4', t => {
     .through(batchByWithCountOrTime(2, 0))
     .toArray(arr => {
       t.deepEqual(arr, [[1, 1], [1], [2, 2], [1], [3]])
+      t.end()
+    })
+})
+
+test('batchByWithCountOrTime #5', t => {
+  const generator = async function* () {
+    // (1)
+    yield 1
+    await wait(10)
+    yield 1
+    yield 1
+
+    // (2)
+    yield 1
+
+    // (3)
+    await wait(100)
+    yield 1
+
+    // (4)
+    yield 2
+    yield 2
+    yield 2
+    await wait(100)
+
+    // (5)
+    yield 3
+    await wait(30)
+
+    // (6)
+    yield 4
+    yield 4
+  }
+
+  _H(fromAsyncGenerator(() => generator()))
+    .through(batchByWithCountOrTime(3, 50))
+    .toArray(arr => {
+      t.deepEqual(arr, [
+        /* (1) */ [1, 1, 1],
+        /* (2) */ [1],
+        /* (3) */ [1],
+        /* (4) */ [2, 2, 2],
+        /* (5) */ [3],
+        /* (6) */ [4, 4]
+      ])
       t.end()
     })
 })
