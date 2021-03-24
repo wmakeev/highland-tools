@@ -46,9 +46,16 @@ test('batchByWithCountOrTime #3', t => {
 })
 
 test('batchByWithCountOrTime #4', t => {
-  const values = [1, 1, 1, 2, 2, 1, 3]
+  const generator = async function* () {
+    const values = [1, 1, 1, 2, 2, 1, 3]
 
-  _H(values)
+    for (const val of values) {
+      yield val
+      wait(50)
+    }
+  }
+
+  _H(fromAsyncGenerator(() => generator()))
     .through(batchByWithCountOrTime(2, 0))
     .toArray(arr => {
       t.deepEqual(arr, [[1, 1], [1], [2, 2], [1], [3]])
@@ -84,6 +91,7 @@ test('batchByWithCountOrTime #5', t => {
     // (6)
     yield 4
     yield 4
+    await wait(100)
   }
 
   _H(fromAsyncGenerator(() => generator()))

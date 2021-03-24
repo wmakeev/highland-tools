@@ -1,9 +1,10 @@
 {
   "name": "@wmakeev/highland-tools",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Tools for highland.js library",
   "keywords": [
     "highland",
+    "highlandjs",
     "stream",
     "tools"
   ],
@@ -18,7 +19,9 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "build": "npm run lint:fix && npm run compile",
-    "build:prod": "rm -rf build/ && npm run lint:fix && npm run compile:prod"
+    "test": "npm run build && tape build/test",
+    "build:prod": "rm -rf build/ && npm run lint:fix && npm run compile:prod",
+    "publish": "npm run test && npm run build:prod && npm publish"
   },
   "author": "Vitaliy V. Makeev",
   "license": "MIT",
