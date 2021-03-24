@@ -21,7 +21,7 @@
     "build": "npm run lint:fix && npm run compile",
     "test": "npm run build && tape build/test",
     "build:prod": "rm -rf build/ && npm run lint:fix && npm run compile:prod",
-    "publish": "npm run test && npm run build:prod && npm publish"
+    "npm:publish": "npm run test && npm run build:prod && npm publish"
   },
   "author": "Vitaliy V. Makeev",
   "license": "MIT",
