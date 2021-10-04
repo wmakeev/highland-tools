@@ -32,3 +32,48 @@ test('batchBy #2', t => {
       t.end()
     })
 })
+
+test('batchBy #3', t => {
+  const values = [] as string[]
+
+  _H(values)
+    .through(batchBy())
+    .map(it => {
+      t.fail('should never call with - ' + typeof it)
+    })
+    .toArray(arr => {
+      t.ok(Array.isArray(arr))
+      t.equal(arr.length, 0)
+      t.end()
+    })
+})
+
+test('batchBy #4', t => {
+  const values = [undefined, undefined, undefined]
+
+  _H(values)
+    .through(batchBy())
+    .toArray(arr => {
+      t.ok(Array.isArray(arr))
+      t.deepEqual(arr, [[undefined, undefined, undefined]])
+      t.end()
+    })
+})
+
+test('batchBy #5', t => {
+  const values = [undefined, undefined, undefined, 1, 1, 2, null, null, 4, 4]
+
+  _H(values)
+    .through(batchBy())
+    .toArray(arr => {
+      t.ok(Array.isArray(arr))
+      t.deepEqual(arr, [
+        [undefined, undefined, undefined],
+        [1, 1],
+        [2],
+        [null, null],
+        [4, 4]
+      ])
+      t.end()
+    })
+})
