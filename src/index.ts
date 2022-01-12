@@ -1,4 +1,5 @@
 export * from './transforms'
 export * from './generators'
+export * from './streams'
 export * from './tools'
 export * from './types'

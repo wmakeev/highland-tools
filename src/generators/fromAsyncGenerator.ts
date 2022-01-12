@@ -33,8 +33,8 @@ export function fromAsyncGenerator<T, R>(
 
     try {
       result = await iter.next()
-    } catch (err) {
-      push(err)
+    } catch (err: unknown) {
+      push(err as Error)
       push(null, _H.nil)
       return
     }
