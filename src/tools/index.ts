@@ -14,3 +14,19 @@ export const wait = (ms: number) =>
  * @returns Highland stream
  */
 export const promiseToStream = <T>(p: Promise<T>) => _H(p)
+
+/**
+ * NonNullable type guard
+ *
+ * Use it in filter:
+ *
+ * ```ts
+ * _H([1, 2, null, 3]).filter(isNotNull).toArray(result => {
+ *   // No type error here
+ *   const nums: number[] = result
+ * })
+ * ```
+ * */
+export const isNotNull = <T>(val: T): val is NonNullable<T> => {
+  return val === null || val === undefined ? false : true
+}

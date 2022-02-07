@@ -1,7 +1,7 @@
 import test from 'tape'
 import _H from 'highland'
 
-import { promiseToStream } from '../src'
+import { promiseToStream, isNotNull } from '../src'
 
 test('promiseToStream', async t => {
   const values = [1, 2, 3, 4, 5, 6, 7]
@@ -28,4 +28,26 @@ test('promiseToStream', async t => {
     .toPromise(Promise)
 
   t.deepEqual(arr2, values)
+})
+
+test('isNotNull', t => {
+  t.plan(2)
+
+  _H([1, 2, null, 3])
+    .filter(it => it !== null)
+    .toArray(result => {
+      // @ts-expect-error Type error here
+      const nums: number[] = result
+
+      t.ok(nums.every(n => n !== null))
+    })
+
+  _H([1, 2, null, 3])
+    .filter(isNotNull)
+    .toArray(result => {
+      // No type error here
+      const nums: number[] = result
+
+      t.ok(nums.every(n => n !== null))
+    })
 })
