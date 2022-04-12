@@ -1,6 +1,6 @@
 {
   "name": "@wmakeev/highland-tools",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Tools for highland.js library",
   "keywords": [
     "highland",
@@ -32,18 +32,18 @@
   "devDependencies": {
     "@types/highland": "^2.12.14",
     "@types/node": "^14",
-    "@types/tape": "^4.13.0",
-    "@typescript-eslint/eslint-plugin": "^5.9.1",
-    "@typescript-eslint/parser": "^5.9.1",
-    "@typescript-eslint/typescript-estree": "^5.9.1",
-    "eslint": "^8.6.0",
-    "eslint-config-prettier": "^8.3.0",
+    "@types/tape": "^4.13.2",
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
+    "@typescript-eslint/typescript-estree": "^5.19.0",
+    "eslint": "^8.13.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "highland": "^2.13.5",
-    "prettier": "^2.5.1",
-    "tape": "^5.4.0",
-    "typescript": "^4.5.4",
+    "prettier": "^2.6.2",
+    "tape": "^5.5.3",
+    "typescript": "^4.6.3",
     "typescript-eslint-language-service": "^5.0.0"
   }
 }
