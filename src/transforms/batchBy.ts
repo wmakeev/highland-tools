@@ -24,7 +24,7 @@ export function batchBy<T>(
         next()
       } else if (it === NIL) {
         if (batch.length > 0) push(null, batch)
-        push(null, it)
+        push(null, NIL)
         batch = []
       } else {
         if (last !== EMPTY && !comparator(last, it as T)) {
