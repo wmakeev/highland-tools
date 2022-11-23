@@ -1,7 +1,7 @@
 import test from 'tape'
 import _H from 'highland'
 import { setTimeout } from 'node:timers/promises'
-import { sortByNaturalOrder } from '../src/transforms/sortByNaturalOrder'
+import { sortByNaturalOrder } from '../src'
 
 test('sortByNaturalOrder', t => {
   t.plan(1)
