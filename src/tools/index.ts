@@ -30,3 +30,19 @@ export const promiseToStream = <T>(p: Promise<T>) => _H(p)
 export const isNotNull = <T>(val: T): val is NonNullable<T> => {
   return val === null || val === undefined ? false : true
 }
+
+/**
+ * Append field to object
+ *
+ * @param fieldName The field where to add data
+ * @returns New object with appended field
+ */
+export const getFieldAppender =
+  <Field extends string, Target, Value>(fieldName: Field) =>
+  (target: Target, data: Value): Target & { [P in Field]: Value } => {
+    // @ts-expect-error mute typing error
+    return {
+      ...target,
+      [fieldName]: data
+    }
+  }
