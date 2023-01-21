@@ -54,7 +54,7 @@ test('types/append', t => {
   _H(values)
     .through(append('four'))
     .toArray(nums => {
-      const result: Exclude<typeof nums[number], number> = 'str'
+      const result: Exclude<(typeof nums)[number], number> = 'str'
       result
 
       t.deepEqual(nums, [1, 2, 3, 'four'])
