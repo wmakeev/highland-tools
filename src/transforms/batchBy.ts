@@ -1,5 +1,6 @@
 import _H from 'highland'
 import { defaultComparator } from '../tools'
+import type { BatchComparator } from '../types'
 
 const EMPTY = Symbol('Empty value')
 
@@ -8,33 +9,33 @@ const NIL = _H.nil
 /**
  * Batch only changed values
  *
- * @param comparator return true if a and b values is equal
+ * @param comparator return true if previous and current values is equal
  * (default is strict equal)
  */
 export function batchBy<T>(
-  comparator: (a: T, b: T) => boolean = defaultComparator
+  comparator: BatchComparator<T> = defaultComparator
 ): (source: Highland.Stream<T>) => Highland.Stream<T[]> {
   return source => {
-    let last: T | typeof EMPTY = EMPTY
+    let prevValue: T | typeof EMPTY = EMPTY
     let batch: T[] = []
 
-    return source.consume<T[]>((err, it, push, next) => {
+    return source.consume<T[]>((err, nextValue, push, next) => {
       if (err) {
         push(err)
         next()
-      } else if (it === NIL) {
+      } else if (nextValue === NIL) {
         if (batch.length > 0) push(null, batch)
         push(null, NIL)
         batch = []
       } else {
-        if (last !== EMPTY && !comparator(last, it as T)) {
+        if (prevValue !== EMPTY && !comparator(prevValue, nextValue as T)) {
           const _tmp = batch
-          batch = [it as T]
+          batch = [nextValue as T]
           push(null, _tmp)
         } else {
-          batch.push(it as T)
+          batch.push(nextValue as T)
         }
-        last = it as T
+        prevValue = nextValue as T
         next()
       }
     })

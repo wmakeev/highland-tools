@@ -4,17 +4,17 @@ import { defaultComparator } from '../tools'
 export function batchByWithCountOrTime<T>(
   n: number,
   ms: number,
-  comparator: (a: T, b: T) => boolean = defaultComparator
+  comparator: (prev: T, next: T) => boolean = defaultComparator
 ): (source: Highland.Stream<T>) => Highland.Stream<T[]> {
   return source => {
-    let last: T | undefined = undefined
+    let prevValue: T | undefined = undefined
     let batched = [] as T[]
     let timeout: NodeJS.Timeout
 
-    return source.consume<T[]>((err, it, push, next) => {
+    return source.consume<T[]>((err, nextValue, push, next) => {
       const pushBatch = () => {
         push(null, batched)
-        last = undefined
+        prevValue = undefined
         batched = []
       }
 
@@ -30,7 +30,7 @@ export function batchByWithCountOrTime<T>(
       if (err) {
         push(err)
         next()
-      } else if (it === _H.nil) {
+      } else if (nextValue === _H.nil) {
         if (batched.length > 0) {
           push(null, batched)
           clearBatchTimeout()
@@ -39,18 +39,18 @@ export function batchByWithCountOrTime<T>(
         push(null, _H.nil)
       } else {
         // first value in batch OR new equal value
-        if (last === undefined || comparator(last, it as T)) {
+        if (prevValue === undefined || comparator(prevValue, nextValue as T)) {
           // reset timeout for new batch
-          if (last === undefined) resetBatchTimeout()
+          if (prevValue === undefined) resetBatchTimeout()
 
-          batched.push(it as T)
+          batched.push(nextValue as T)
 
           // batch by count
           if (batched.length === n) {
             pushBatch()
             clearBatchTimeout() // no need for timeout on empty batch
           } else {
-            last = it as T
+            prevValue = nextValue as T
           }
         }
         // value changed
@@ -60,8 +60,8 @@ export function batchByWithCountOrTime<T>(
             resetBatchTimeout()
           }
 
-          batched = [it as T]
-          last = it as T
+          batched = [nextValue as T]
+          prevValue = nextValue as T
         }
 
         next()
