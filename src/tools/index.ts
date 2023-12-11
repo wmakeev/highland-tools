@@ -32,6 +32,40 @@ export const isNotNull = <T>(val: T): val is NonNullable<T> => {
 }
 
 /**
+ * Highland Nil value type guard
+ *
+ * Usage example in consume:
+ *
+ * ```ts
+ * _H([1, 2, 3]).consume((err, it, push, next) => {
+ *   // Error
+ *   if (err) {
+ *     // pass errors along the stream and consume next value
+ *     push(err)
+ *     next()
+ *   }
+ *
+ *   // End of stream
+ *   else if (
+ *     isNil(it) // it -> Highland.Nil | number
+ *   ) {
+ *     // pass nil (end event) along the stream
+ *     push(null, it) // it -> Highland.Nil
+ *   }
+ *
+ *   // data item
+ *   else {
+ *     push(null, it) // it -> number
+ *     next()
+ *   }
+ * })
+ * ```
+ */
+export const isNil = (val: unknown): val is Highland.Nil => {
+  return val === _H.nil
+}
+
+/**
  * Append field to object
  *
  * @param fieldName The field where to add data

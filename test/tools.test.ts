@@ -1,7 +1,7 @@
 import test from 'tape'
 import _H from 'highland'
 
-import { promiseToStream, isNotNull } from '../src'
+import { promiseToStream, isNotNull, isNil } from '../src'
 
 test('promiseToStream', async t => {
   const values = [1, 2, 3, 4, 5, 6, 7]
@@ -49,5 +49,36 @@ test('isNotNull', t => {
       const nums: number[] = result
 
       t.ok(nums.every(n => n !== null))
+    })
+})
+
+test('isNil', t => {
+  t.plan(1)
+
+  _H([1, 2, 3])
+    .consume((err, it, push, next) => {
+      // Error
+      if (err) {
+        // pass errors along the stream and consume next value
+        push(err)
+        next()
+      }
+
+      // End of stream
+      else if (
+        isNil(it) // it -> Highland.Nil | number
+      ) {
+        // pass nil (end event) along the stream
+        push(null, it) // it -> Highland.Nil
+      }
+
+      // data item
+      else {
+        push(null, it) // it -> number
+        next()
+      }
+    })
+    .toArray(result => {
+      t.deepEqual(result, [1, 2, 3])
     })
 })
