@@ -1,7 +1,7 @@
 import test from 'tape'
 import _H from 'highland'
 
-import { changes } from '../src'
+import { changes } from '../src/index.js'
 
 test('changes #1', t => {
   const values = [1, 1, 1, 2, 2, 1, 3]

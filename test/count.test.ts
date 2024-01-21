@@ -1,7 +1,7 @@
 import test from 'tape'
 import _H from 'highland'
 
-import { count } from '../src'
+import { count } from '../src/index.js'
 
 test('count', t => {
   const values = [1, 2, 3, 4, 5, 6, 7]

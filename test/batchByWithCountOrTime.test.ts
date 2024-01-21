@@ -1,8 +1,8 @@
 import test from 'tape'
 import _H from 'highland'
 
-import { batchByWithCountOrTime, fromAsyncGenerator } from '../src'
-import { wait } from '../src/tools'
+import { batchByWithCountOrTime, fromAsyncGenerator } from '../src/index.js'
+import { wait } from '../src/tools/index.js'
 
 test('batchByWithCountOrTime #1', t => {
   const values = [1, 1, 1, 2, 2, 1, 3]

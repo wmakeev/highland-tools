@@ -1,4 +1,4 @@
-import { defaultComparator } from '../tools'
+import { defaultComparator } from '../tools/index.js'
 
 /**
  * Pass down to stream only changed values

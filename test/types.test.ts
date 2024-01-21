@@ -5,7 +5,7 @@
 import test from 'tape'
 import _H from 'highland'
 
-import { compact, append } from '../src'
+import { compact, append } from '../src/index.js'
 
 test('types/compact', t => {
   const values = [1, null, 1, 2, null, 1, 3]

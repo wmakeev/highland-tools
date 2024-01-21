@@ -1,5 +1,5 @@
 import _H from 'highland'
-import { defaultComparator } from '../tools'
+import { defaultComparator } from '../tools/index.js'
 
 export function batchByWithCountOrTime<T>(
   n: number,

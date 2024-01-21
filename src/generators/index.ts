@@ -1,1 +1,1 @@
-export * from './fromAsyncGenerator'
+export * from './fromAsyncGenerator.js'

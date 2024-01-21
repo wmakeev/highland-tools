@@ -1,7 +1,7 @@
 import test from 'tape'
 import _H from 'highland'
 
-import { promiseToStream, isNotNull, isNil } from '../src'
+import { promiseToStream, isNotNull, isNil } from '../src/index.js'
 
 test('promiseToStream', async t => {
   const values = [1, 2, 3, 4, 5, 6, 7]

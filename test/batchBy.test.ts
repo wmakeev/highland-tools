@@ -1,7 +1,7 @@
 import test from 'tape'
 import _H from 'highland'
 
-import { batchBy } from '../src'
+import { batchBy } from '../src/index.js'
 
 test('batchBy #1', t => {
   const values = [1, 1, 1, 2, 2, 1, 3]

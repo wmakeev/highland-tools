@@ -1,8 +1,8 @@
 import test from 'tape'
 import _H from 'highland'
 
-import { fromAsyncGenerator } from '../src'
-import { wait } from '../src/tools'
+import { fromAsyncGenerator } from '../src/index.js'
+import { wait } from '../src/tools/index.js'
 
 test('fromAsyncGenerator #1', t => {
   const generator = async function* (len: number) {

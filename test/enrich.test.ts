@@ -1,7 +1,7 @@
 import test from 'tape'
 import _H from 'highland'
 
-import { enrich, getFieldAppender } from '../src'
+import { enrich, getFieldAppender } from '../src/index.js'
 
 test('enrich', t => {
   const values = [{ a: 1 }, { a: 2 }, { a: 3 }]
@@ -22,8 +22,8 @@ test('enrich', t => {
     .toArray(arr => {
       t.equal(arr.length, 3)
 
-      t.equal(arr[0].a, 1)
-      t.equal(arr[0].add, 2)
+      t.equal(arr[0]?.a, 1)
+      t.equal(arr[0]?.add, 2)
 
       t.deepEqual(arr, [
         { a: 1, add: 2 },
@@ -51,8 +51,8 @@ test('enrich with field appender', t => {
     .toArray(arr => {
       t.equal(arr.length, 3)
 
-      t.equal(arr[0].a, 1)
-      t.equal(arr[0].add, 2)
+      t.equal(arr[0]?.a, 1)
+      t.equal(arr[0]?.add, 2)
 
       t.deepEqual(arr, [
         { a: 1, add: 2 },

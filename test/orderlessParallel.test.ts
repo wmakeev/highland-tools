@@ -1,7 +1,7 @@
 import test from 'tape'
 import _H from 'highland'
 
-import { orderlessParallel } from '../src'
+import { orderlessParallel } from '../src/index.js'
 
 test('orderlessParallel#1', t => {
   t.plan(1)

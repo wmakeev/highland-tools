@@ -1,6 +1,6 @@
 import _H from 'highland'
-import { defaultComparator } from '../tools'
-import type { BatchComparator } from '../types'
+import { defaultComparator } from '../tools/index.js'
+import type { BatchComparator } from '../types/index.js'
 
 const EMPTY = Symbol('Empty value')
 
