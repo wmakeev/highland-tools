@@ -1,5 +1,7 @@
 import _H from 'highland'
 
+export * from './ThroughputProbeDuplex.js'
+
 export const defaultComparator = <T>(a: T, b: T) => a === b
 
 export const wait = (ms: number) =>

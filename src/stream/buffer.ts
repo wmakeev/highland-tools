@@ -10,7 +10,7 @@ import { PassThrough } from 'node:stream'
  *
  * ```ts
  * _H([1, 2, 3, 4, 5])
- *  .map(fastProduser)
+ *  .map(fastProducer)
  *  .through(buffer(3, true))
  *  .map(slowTransformer)
  * ```

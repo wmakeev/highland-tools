@@ -105,13 +105,17 @@ test('buffer #4', async t => {
 
   const result = await _H(readStream)
     .through(buffer(1024))
-    .map(chunk => (chunk as Buffer).toString('utf8'))
     .collect()
     .toPromise(Promise)
 
-  t.ok(Array.isArray(result))
+  t.ok(result instanceof Array)
+  t.equal(result.length, 1)
 
-  const text = result.join('')
+  const resultBuffer = result[0]
+
+  t.ok(resultBuffer instanceof Buffer)
+
+  const text = (resultBuffer as Buffer).toString('utf8')
 
   t.ok(text.startsWith('import'))
 })

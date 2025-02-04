@@ -18,7 +18,29 @@
       "outFiles": [
         "${workspaceFolder}/build/**/*.js"
       ],
-      "internalConsoleOptions": "openOnSessionStart"
-    }
+      "internalConsoleOptions": "openOnSessionStart",
+      "outputCapture": "std"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Test (--test-only)",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${file}",
+      "envFile": "${workspaceFolder}/.env",
+      "runtimeArgs": [
+        "--enable-source-maps",
+        "--test-only",
+        "--test-reporter=spec"
+      ],
+      "preLaunchTask": "npm: compile",
+      "outFiles": [
+        "${workspaceFolder}/build/**/*.js"
+      ],
+      "internalConsoleOptions": "openOnSessionStart",
+      "outputCapture": "std"
+    },
   ]
 }
